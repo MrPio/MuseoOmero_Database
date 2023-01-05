@@ -1,4 +1,20 @@
 use museo_omero;
+
+# op 34
+update articoli
+set disponibilita = disponibilita - 1
+where nome = 'benda';
+
+
+# op 35
+update abbonamenti
+set data_rilascio = now(),
+    data_scadenza = ADDDATE(current_date, INTERVAL 1 month),
+    tipologia     = 'mensile',
+    costo         = 10.00
+where cliente = 2;
+
+
 # op 36
 set @opera_id = 1;
 set @opera_descrizione =
@@ -29,6 +45,19 @@ update credenziali
 set username=@new_username,
     password=md5(@new_password)
 where Dipendente = @dipendente_id;
+
+
+# op 38
+update ruoli_reali
+set reparto = 'UfficioProgettazione'
+where dipendente = 9
+  and is_storico = false;
+
+
+# op 39
+update eventi
+set data_inizio = '2023-01-13'
+where id = 3;
 
 
 # op 40

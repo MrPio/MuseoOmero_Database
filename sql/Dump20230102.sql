@@ -108,7 +108,7 @@ CREATE TABLE `artisti` (
   `sesso` char(1) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `nome` (`nome`,`cognome`,`data_nasc`,`luogo_nasc`),
-  CONSTRAINT `artisti_chk_1` CHECK (((`sesso` = _cp850'M') or (`sesso` = _cp850'F')))
+  CONSTRAINT `artisti_chk_1` CHECK (((`sesso` = 'M') or (`sesso` = 'F')))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -184,7 +184,7 @@ CREATE TABLE `autori` (
   `luogo_nasc` varchar(20) DEFAULT NULL,
   `sesso` char(1) NOT NULL,
   PRIMARY KEY (`id`),
-  CONSTRAINT `autori_chk_1` CHECK (((`sesso` = _cp850'M') or (`sesso` = _cp850'F')))
+  CONSTRAINT `autori_chk_1` CHECK (((`sesso` = 'M') or (`sesso` = _cp850'F')))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -447,7 +447,7 @@ CREATE TABLE `dipendenti` (
   UNIQUE KEY `nome` (`nome`,`cognome`,`data_nasc`,`luogo_nasc`),
   UNIQUE KEY `email` (`email`),
   UNIQUE KEY `cellulare` (`cellulare`),
-  CONSTRAINT `dipendenti_chk_1` CHECK (((`sesso` = _cp850'M') or (`sesso` = _cp850'F')))
+  CONSTRAINT `dipendenti_chk_1` CHECK (((`sesso` = 'M') or (`sesso` = _cp850'F')))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -662,7 +662,7 @@ CREATE TABLE `informazioni_visitatori` (
   `sesso` char(1) DEFAULT NULL,
   `data_nasc` date DEFAULT NULL,
   PRIMARY KEY (`visitatore`),
-  CONSTRAINT `informazioni_visitatori_chk_1` CHECK (((`sesso` = _cp850'M') or (`sesso` = _cp850'F')))
+  CONSTRAINT `informazioni_visitatori_chk_1` CHECK (((`sesso` = 'M') or (`sesso` = _cp850'F')))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

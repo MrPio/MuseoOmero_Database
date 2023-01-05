@@ -25,6 +25,30 @@ where p.data_prenotazione >= @start
   and p.data_prenotazione < DATE_ADD(@start, INTERVAL 1 WEEK);
 
 
+# op 22
+select t.*
+from turni as t,
+     ruoli_reali as r
+where r.data_inizio = t.data_inizio
+  and r.dipendente = t.dipendente
+  and r.is_storico = false
+  and t.dipendente = 10;
+
+
+# op 23
+select e.id,
+       m.titolo,
+       m.descrizione,
+       m.artista,
+       m.tema,
+       m.num_opere,
+       e.data_inizio as inizio,
+       m.data_fine   as fine
+from eventi as e,
+     mostre as m
+where e.id = m.evento;
+
+
 # op 24
 SET @id_opera = 2;
 select opera.data,
@@ -86,6 +110,19 @@ from autori a
 where a.id = @id_artista;
 
 
+# op 26
+select *
+from clienti as c
+where c.id = 10;
+
+
+# op 27
+select c.disabilita, count(c.visitatore) as quantita
+from certificati as c
+group by c.disabilita
+order by quantita desc;
+
+
 # op 28
 select a.*,
        count(a.id) numero_opere_create
@@ -106,22 +143,53 @@ where o.cliente = @id_cliente
   and o.data < @end_ordini;
 
 
-# op 32
-# op 32
-create view cataloghi_piu_venduti(catalogo,vendite_totali) as
-    select catalogo, sum(quantita) as vendite_totali
-    from (select c.nome as catalogo, co.quantita as quantita
-          from cataloghi c
-                   left join contenuti co on c.nome = co.articolo
-          union all
-          select c.nome, ca.quantita
-          from cataloghi c
-                   left join carrelli ca on c.nome = ca.catalogo) as vendite_ordini
-    group by catalogo
-    order by vendite_totali desc;
+# op 30
+select v.*, count(ve.opera) as vendute
+from venditori as v
+         join clienti as c on v.nome = c.nome and v.cognome = c.cognome
+         join abbonamenti as a on c.id = a.cliente
+         left join vendite as ve on v.id = ve.venditore
+where a.data_scadenza >= current_date
+group by ve.venditore;
 
+
+# op 31
+select avg(DATE_FORMAT(FROM_DAYS(DATEDIFF(e.data_inizio, '2001-05-09')), '%Y') + 0) as media
+from visitatori as v,
+     informazioni_visitatori as inf,
+     questionari as q,
+     adesioni as a,
+     gruppi as g,
+     biglietti as b,
+     mostre as m,
+     eventi as e
+
+where v.id = inf.visitatore
+  and v.id = q.visitatore
+  and v.id = a.visitatore
+  and a.gruppo = g.Id
+  and g.Id = b.gruppo
+  and b.evento = m.evento
+  and e.id = m.evento;
+
+
+
+# op 32
+create view cataloghi_piu_venduti(catalogo, vendite_totali) as
+select catalogo, sum(quantita) as vendite_totali
+from (select c.nome as catalogo, co.quantita as quantita
+      from cataloghi c
+               left join contenuti co on c.nome = co.articolo
+      union all
+      select c.nome, ca.quantita
+      from cataloghi c
+               left join carrelli ca on c.nome = ca.catalogo) as vendite_ordini
+group by catalogo
+order by vendite_totali desc;
 select cpv.*, numero_pag, rilegatura
-from cataloghi_piu_venduti as cpv join cataloghi c on cpv.catalogo=c.nome;
+from cataloghi_piu_venduti as cpv
+         join cataloghi c on cpv.catalogo = c.nome;
+
 
 # op 33
 SET @mese = '2021-05-01';
