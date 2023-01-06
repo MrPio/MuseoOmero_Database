@@ -1,5 +1,47 @@
 use museo_omero;
 
+# op 16
+select c.nome, c.cognome, a.data_rilascio, a.data_scadenza, a.tipologia, a.costo
+from clienti as c
+         left join abbonamenti as a on c.id = a.cliente
+where c.id = 25;
+
+# op 17
+select *
+from questionari
+where data_compilazione = '2021-04-28';
+
+
+# op 18
+set @id_lab = 18;
+select l.*, lr.piano, e.data_inizio, lr.stanza, sum(g.num_partecipanti) as numero_partecipanti, a.capienza
+from laboratori_reali lr
+         join laboratori l on l.nome = lr.laboratorio
+         join attivita a on a.evento = lr.attivita
+         join eventi e on e.id = lr.attivita
+         left join prenotazioni p on lr.attivita = p.attivita
+         join gruppi g on p.gruppo = g.Id
+where lr.attivita = @id_lab
+group by lr.attivita;
+
+
+# op 19
+set @giorno = '2021-01-01';
+select e.data_inizio,
+       a.capienza,
+       coalesce(sum(g.num_partecipanti), 0)  as numero_prenotati,
+       coalesce(sum(g2.num_partecipanti), 0) as numero_partecipanti_effettivi
+from attivita a
+         join eventi e on a.evento = e.id
+         left join prenotazioni p on p.attivita = a.evento
+         left join gruppi g on g.Id = p.gruppo
+         left join biglietti b on a.evento = b.evento
+         left join gruppi g2 on b.gruppo = g2.Id
+where a.is_tour_guidato = true
+  and date(e.data_inizio) = @giorno
+group by e.id;
+
+
 # op 20
 SET @titolo = 'la voce, l''artista, il mito';
 

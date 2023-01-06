@@ -21,16 +21,6 @@ set @opera_descrizione =
         '“Il Partenone racchiude un’armonica sintesi di utilità, solidità e piacevolezza”, Vitruvio da “De Architectura”.';
 set @opera_sala = ' Greco e Romano';
 set @mostra_id = 19;
-drop procedure assegna_rimuovi_opera_in_mostra;
-create procedure assegna_rimuovi_opera_in_mostra(in opera_id int, in mostra_id int)
-begin
-    if exists(select * from esposizioni where opera = opera_id and mostra = mostra_id) then
-        delete from esposizioni where opera = opera_id and mostra = mostra_id;
-    else
-        insert into esposizioni values (mostra_id, opera_id);
-    end if;
-end;
-call assegna_rimuovi_opera_in_mostra(@opera_id, @mostra_id);
 update opere
 set descrizione=@opera_descrizione,
     sala=@opera_sala
