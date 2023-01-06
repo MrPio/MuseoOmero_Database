@@ -108,7 +108,7 @@ values (@new_id, 88),
 
 # op 14
 set @new_id = (select max(id)
-               from dipendenti) + 1;
+               from dipendentiè) + 1;
 insert into dipendenti
 values (@new_id, 'Maurizio', 'Del Monte', '1976-12-15', 'Ascoli Piceno', 'M', 'mauroodelmon88@gmail.com',
         '+39 (33) 8510 3', 'https://linkedin.com//851189', current_timestamp);
@@ -116,4 +116,4 @@ values (@new_id, 'Maurizio', 'Del Monte', '1976-12-15', 'Ascoli Piceno', 'M', 'm
 
 # op 15
 insert into turni
-values (23,'2023-01-08','lunedi','08:30:00','19:00:00');
+values (23, '2023-01-08', 'lunedi', '08:30:00', '19:00:00');

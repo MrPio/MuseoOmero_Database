@@ -6,6 +6,7 @@ from clienti as c
          left join abbonamenti as a on c.id = a.cliente
 where c.id = 25;
 
+
 # op 17
 select *
 from questionari
@@ -74,7 +75,7 @@ from turni as t,
 where r.data_inizio = t.data_inizio
   and r.dipendente = t.dipendente
   and r.is_storico = false
-  and t.dipendente = 10;
+  and t.dipendente = 7;
 
 
 # op 23
@@ -108,13 +109,13 @@ select opera.data,
        is_calco,
        scala,
        originale,
-       originale_della_copia.titolo,
-       originale_della_copia.is_interna,
-       originale_della_copia.città,
-       originale_della_copia.altezza,
-       originale_della_copia.larghezza,
-       originale_della_copia.profondità,
-       originale_della_copia.periodo_storico,
+       originale_della_copia.titolo as titolo_originale_copia,
+       originale_della_copia.is_interna as is_interna_originale_copia,
+       originale_della_copia.città as citta_originale_copia,
+       originale_della_copia.altezza as alt_originale_copia,
+       originale_della_copia.larghezza as lar_originale_copia,
+       originale_della_copia.profondità as prof_originale_copia,
+       originale_della_copia.periodo_storico as ps_originale_copia,
        ma.is_smontabile,
        is_pieno,
        opera_originale.data,
@@ -191,8 +192,8 @@ from venditori as v
          join clienti as c on v.nome = c.nome and v.cognome = c.cognome
          join abbonamenti as a on c.id = a.cliente
          left join vendite as ve on v.id = ve.venditore
-where a.data_scadenza >= current_date
-group by ve.venditore;
+where a.data_scadenza >= '2021-1-1'
+group by v.id;
 
 
 # op 31
